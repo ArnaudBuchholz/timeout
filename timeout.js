@@ -159,12 +159,27 @@
         }
     }
 
+    /**
+     * Try to retrieve the URL of timeout.js
+     *
+     * return {String}
+     * @private
+     */
+    function _getTimeoutURL() {
+        // Check if a script tag with the id timeout exists
+        // Check all script tags for the one finishing with timeout.js
+        // Default
+        return "timeout.js";
+    }
+
     if ("undefined" !== typeof window) {
         /**
          * The Web Worker does not have access to the window, this is a good
          * condition to detect if we are in the page or in the thread.
+         *
+         * However, to create a worker, we need the URL of the script to load.
          */
-        _worker = new Worker("timeout.js");
+        _worker = new Worker(_getTimeoutURL());
         _worker.addEventListener("message", _windowMessage);
         window.setTimeout = _setTimeout;
         window.clearTimeout = _clearTimeout;
