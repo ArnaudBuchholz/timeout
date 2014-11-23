@@ -88,7 +88,8 @@
         if ("string" === typeof callback) {
             callback = new Func(callback);
         }
-        map[id] = [callback].concat(initialArguments.slice(2));
+        map[id] = [callback]
+            .concat(Array.prototype.slice.apply(initialArguments, [2]));
         _worker.postMessage({
             type: type,
             delay: delay,
